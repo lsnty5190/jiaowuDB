@@ -1,5 +1,6 @@
 import pymysql
 
+<<<<<<< HEAD
 # conn=pymysql.connect(host="localhost",user='root',passwd='root',database='jwsys',port=3306,use_unicode=True, charset="utf8")
 conn = pymysql.connect(host='192.168.1.166',
                        port=3306,
@@ -8,6 +9,9 @@ conn = pymysql.connect(host='192.168.1.166',
                        database='jiaowuDB',
                        use_unicode=True, 
                        charset="utf8")
+=======
+conn=pymysql.connect(host="localhost",user='root',passwd='root',database='jwsys',port=3306,use_unicode=True, charset="utf8")
+>>>>>>> caff29c300df1d4b1326fb7840f4aca6946cc463
 cursor = conn.cursor()
 
 
@@ -115,22 +119,22 @@ def insert_takes():
             print(line)
     print(cnt)
 
-# depart_fin = open('数据库导入以及说明/data/department.txt', 'r', encoding='utf-8')
-# insert_department()
-# teacher_fin = open('数据库导入以及说明/data/teacher.txt', 'r')
-# insert_teacher()
-# classroom_fin = open('数据库导入以及说明/data/classroom.txt', 'r')
-# insert_classroom()
-# time_slot_fin = open('数据库导入以及说明/data/time_slot.txt', 'r')
-# insert_time_slot()
-# course_fin = open('数据库导入以及说明/data/course.txt', 'r')
-# insert_course()
-# section_fin = open('数据库导入以及说明/data/section.txt', 'r')
-# insert_section()
-# teaches_fin = open('数据库导入以及说明/data/teaches.txt', 'r')
-# insert_teaches()
-# student_fin = open('数据库导入以及说明/data/stu_empty_credits.txt', 'r')
-# insert_student()
+depart_fin = open('数据库导入以及说明/data/department.txt', 'r', encoding='utf-8')
+insert_department()
+teacher_fin = open('数据库导入以及说明/data/teacher.txt', 'r')
+insert_teacher()
+classroom_fin = open('数据库导入以及说明/data/classroom.txt', 'r')
+insert_classroom()
+time_slot_fin = open('数据库导入以及说明/data/time_slot.txt', 'r')
+insert_time_slot()
+course_fin = open('数据库导入以及说明/data/course.txt', 'r')
+insert_course()
+section_fin = open('数据库导入以及说明/data/section.txt', 'r')
+insert_section()
+teaches_fin = open('数据库导入以及说明/data/teaches.txt', 'r')
+insert_teaches()
+student_fin = open('数据库导入以及说明/data/stu_empty_credits.txt', 'r')
+insert_student()
 takes_fin = open('数据库导入以及说明/data/takes_sql.txt', 'r')
 insert_takes()
 conn.commit()
