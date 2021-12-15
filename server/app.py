@@ -1,7 +1,7 @@
 '''
 Author: your name
 Date: 2021-12-14 14:19:03
-LastEditTime: 2021-12-15 12:47:17
+LastEditTime: 2021-12-15 21:48:08
 LastEditors: Please set LastEditors
 Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
@@ -11,12 +11,15 @@ from flask_cors import CORS
 
 import json
 
+from dbfunc import select_all, add, delete, update, select_sp, stu_schedule, start_course, tea_schedule
+
 
 with open('MOCK\COURSES.json') as f:
     BOOKS = json.load(f)
 
-with open('MOCK\STUDENTS.json') as f:
-    STUDENTS = json.load(f)    
+# with open('MOCK\STUDENTS.json') as f:
+#     STUDENTS = json.load(f)   
+STUDENTS =  select_all('student')
 
 with open('MOCK\MOCK_STU.json') as f:
     MOCK_STU = json.load(f) 
@@ -77,20 +80,13 @@ def all_books():
     response_object = {'status': 'success'}
     if request.method == 'POST':
         post_data = request.get_json()
-        BOOKS.append({
-            'course_id': int(post_data.get('course_id')),
-            'course_name': post_data.get('course_name'),
-            'dept_id': post_data.get('dept_id'),
-            'course_eng_name': post_data.get('course_eng_name'),
-            'credit': post_data.get('credit')
-        })
+        add('course', post_data)
         # add it in database...
         response_object['message'] = 'Course added!'
     else:
         # search all...
-        response_object['books'] = BOOKS
+        response_object['books'] = json.loads(select_all('course'))
     return jsonify(response_object)
-
 
 @app.route('/books/<book_id>', methods=['PUT', 'DELETE'])
 def single_book(book_id):
@@ -98,18 +94,11 @@ def single_book(book_id):
     if request.method == 'PUT':
         post_data = request.get_json()
         print(book_id)
-        remove_item(book_id, BOOKS, 'course_id')
-        BOOKS.append({
-            'course_id': int(post_data.get('course_id')),
-            'course_name': post_data.get('course_name'),
-            'dept_id': post_data.get('dept_id'),
-            'course_eng_name': post_data.get('course_eng_name'),
-            'credit': post_data.get('credit')
-        })
+        update('course', post_data, book_id)
         # update database...
         response_object['message'] = 'Course updated!'
     if request.method == 'DELETE':
-        remove_item(book_id, BOOKS, 'course_id')
+        delete('course', book_id)
         # delete it in database...
         response_object['message'] = 'Course removed!'
     return jsonify(response_object)
@@ -120,7 +109,7 @@ def search_courses():
     if request.method == 'POST':
         post_data = request.get_json()
         # search... please replace MOCK with real data
-        response_object['books'] = MOCK_CO
+        response_object['books'] = json.loads(select_sp('course', post_data))
     else:
         response_object['books'] = MOCK_CO
 
@@ -131,16 +120,13 @@ def all_students():
     response_object = {'status': 'success'}
     if request.method == 'POST':
         post_data = request.get_json()
-        STUDENTS.append({
-            'student_id': int(post_data.get('student_id')),
-            'student_name': post_data.get('student_name'),
-            'dept_id': post_data.get('dept_id'),
-            'tot_credits': post_data.get('tot_credits')
-        })
+        print(post_data)
+        add('student', post_data)
         response_object['message'] = 'Student added!'
-        print(STUDENTS)
     else:
-        response_object['books'] = STUDENTS
+        # select all students...
+        response_object['books'] = json.loads(select_all('student'))
+
     return jsonify(response_object)
 
 @app.route('/students/<student_id>', methods=['PUT', 'DELETE'])
@@ -149,19 +135,12 @@ def single_student(student_id):
     if request.method == 'PUT':
         post_data = request.get_json()
         print(student_id)
-        remove_item(student_id, STUDENTS, 'student_id')
-        STUDENTS.append({
-            'student_id': int(post_data.get('student_id')),
-            'student_name': post_data.get('student_name'),
-            'dept_id': post_data.get('dept_id'),
-            'tot_credits': post_data.get('tot_credits')
-        })
+        update('student', post_data, student_id)
         response_object['message'] = 'Student updated!'
-        print(STUDENTS)
     if request.method == 'DELETE':
-        remove_item(student_id, STUDENTS, 'student_id')
-        print(STUDENTS)
+        delete('student', student_id)
         response_object['message'] = 'Student removed!'
+
     return jsonify(response_object)
 
 @app.route('/students/search', methods=['GET', 'POST'])
@@ -170,7 +149,7 @@ def search_students():
     if request.method == 'POST':
         post_data = request.get_json()
         # search... please replace MOCK with real data
-        response_object['books'] = MOCK_STU
+        response_object['books'] = json.loads(select_sp('student', post_data))
     else:
         response_object['books'] = MOCK_STU
 
@@ -181,13 +160,10 @@ def all_depts():
     response_object = {'status': 'success'}
     if request.method == 'POST':
         post_data = request.get_json()
-        DEPT.append({
-            'dept_id': int(post_data.get('dept_id')),
-            'dept_name': post_data.get('tot_credits')
-        })
+        add('department', post_data)
         response_object['message'] = 'Dept added!'
     else:
-        response_object['books'] = DEPT
+        response_object['books'] = json.loads(select_all('department'))
     return jsonify(response_object)
 
 @app.route('/depts/<dept_id>', methods=['PUT', 'DELETE'])
@@ -195,16 +171,12 @@ def single_dept(dept_id):
     response_object = {'status': 'success'}
     if request.method == 'PUT':
         post_data = request.get_json()
-        print(dept_id)
-        remove_item(dept_id, DEPT, 'dept_id')
-        DEPT.append({
-            'dept_id': int(post_data.get('dept_id')),
-            'dept_name': post_data.get('tot_credits')
-        })
-        response_object['message'] = 'Student updated!'
+        print(post_data)
+        update('department', post_data, dept_id)
+        response_object['message'] = 'Department updated!'
     if request.method == 'DELETE':
         remove_item(dept_id, DEPT, 'dept_id')
-        response_object['message'] = 'Student removed!'
+        response_object['message'] = 'Department removed!'
     return jsonify(response_object)
 
 @app.route('/depts/search', methods=['GET', 'POST'])
@@ -213,7 +185,7 @@ def search_dept():
     if request.method == 'POST':
         post_data = request.get_json()
         # search... please replace MOCK with real data
-        response_object['books'] = MOCK_DEPT
+        response_object['books'] = json.loads(select_sp('department', post_data))
     else:
         response_object['books'] = MOCK_DEPT
 
@@ -224,17 +196,10 @@ def all_sections():
     response_object = {'status': 'success'}
     if request.method == 'POST':
         post_data = request.get_json()
-        SECTION.append({
-            'course_id': int(post_data.get('course_id')),
-            'sec_id': post_data.get('sec_id'),
-            'year_semester': post_data.get('year_semester'),
-            'classroom_id': post_data.get('classroom_id'),
-            'time_slot_id': post_data.get('time_slot_id'),
-            'enrollment': post_data.get('enrollment')
-        })
+        add('section', post_data)
         response_object['message'] = 'Section added!'
     else:
-        response_object['books'] = SECTION
+        response_object['books'] = json.loads(select_all('section'))
     return jsonify(response_object)
 
 @app.route('/sections/<sec_id>', methods=['PUT', 'DELETE'])
@@ -243,18 +208,10 @@ def single_section(sec_id):
     if request.method == 'PUT':
         post_data = request.get_json()
         print(sec_id)
-        remove_item(sec_id, SECTION, 'course_id')
-        SECTION.append({
-            'course_id': int(post_data.get('course_id')),
-            'sec_id': post_data.get('sec_id'),
-            'year_semester': post_data.get('year_semester'),
-            'classroom_id': post_data.get('classroom_id'),
-            'time_slot_id': post_data.get('time_slot_id'),
-            'enrollment': post_data.get('enrollment')
-        })
+        update('section', post_data, sec_id)
         response_object['message'] = 'Section updated!'
     if request.method == 'DELETE':
-        remove_item(sec_id, SECTION, 'course_id')
+        delete('section', sec_id)
         response_object['message'] = 'Section removed!'
     return jsonify(response_object)
 
@@ -264,7 +221,7 @@ def search_sec():
     if request.method == 'POST':
         post_data = request.get_json()
         # search... please replace MOCK with real data
-        response_object['books'] = MOCK_SEC
+        response_object['books'] = json.loads(select_sp('section', post_data))
     else:
         response_object['books'] = MOCK_SEC
 
@@ -275,16 +232,11 @@ def all_takes():
     response_object = {'status': 'success'}
     if request.method == 'POST':
         post_data = request.get_json()
-        TAKES.append({
-            'student_id': int(post_data.get('student_id')),
-            'course_id': int(post_data.get('course_id')),
-            'sec_id': post_data.get('sec_id'),
-            'year_semester': post_data.get('year_semester'),
-            'grade': post_data.get('grade')
-        })
+        add('takes', post_data)
         response_object['message'] = 'Section added!'
     else:
-        response_object['books'] = TAKES
+        response_object['books'] = json.loads(select_all('takes'))
+
     return jsonify(response_object)
 
 @app.route('/takes/<take_id>', methods=['PUT', 'DELETE'])
@@ -293,17 +245,10 @@ def single_take(take_id):
     if request.method == 'PUT':
         post_data = request.get_json()
         print(take_id)
-        remove_item(take_id, TAKES, 'student_id')
-        TAKES.append({
-            'student_id': int(post_data.get('student_id')),
-            'course_id': int(post_data.get('course_id')),
-            'sec_id': post_data.get('sec_id'),
-            'year_semester': post_data.get('year_semester'),
-            'grade': post_data.get('grade')
-        })
+        update('takes', post_data, take_id)
         response_object['message'] = 'Take updated!' 
     if request.method == 'DELETE':
-        remove_item(take_id, TAKES, 'student_id')
+        delete('takes', take_id)
         response_object['message'] = 'Take removed!'
     return jsonify(response_object)
 
@@ -324,18 +269,10 @@ def all_teachers():
     response_object = {'status': 'success'}
     if request.method == 'POST':
         post_data = request.get_json()
-        TEACHERS.append({
-            "teacher_id": int(post_data.get("teacher_id")),
-            "teacher_name": post_data.get("teacher_name"),
-            "teacher_gender": post_data.get("teacher_gender"),
-            "teacher_title": post_data.get("teacher_title"),
-            "teacher_nation": post_data.get("teacher_nation"),
-            "teacher_email": post_data.get("teacher_email"),
-            "dept_id": post_data.get("dept_id")
-        })
+        add('teacher', post_data)
         response_object['message'] = 'Teacher added!'
     else:
-        response_object['books'] = TEACHERS
+        response_object['books'] = json.loads(select_all('teacher'))
     return jsonify(response_object)
 
 @app.route('/teachers/<tea_id>', methods=['PUT', 'DELETE'])
@@ -344,19 +281,10 @@ def single_teacher(tea_id):
     if request.method == 'PUT':
         post_data = request.get_json()
         print(tea_id)
-        remove_item(tea_id, TEACHERS, 'teacher_id')
-        TEACHERS.append({
-            "teacher_id": int(post_data.get("teacher_id")),
-            "teacher_name": post_data.get("teacher_name"),
-            "teacher_gender": post_data.get("teacher_gender"),
-            "teacher_title": post_data.get("teacher_title"),
-            "teacher_nation": post_data.get("teacher_nation"),
-            "teacher_email": post_data.get("teacher_email"),
-            "dept_id": post_data.get("dept_id")
-        })
+        update('teacher', post_data, tea_id)
         response_object['message'] = 'Teacher updated!'
     if request.method == 'DELETE':
-        remove_item(tea_id, TEACHERS, 'teacher_id')
+        delete('teacher', tea_id)
         response_object['message'] = 'Teacher removed!'
     return jsonify(response_object)
 
@@ -367,7 +295,7 @@ def search_teacher():
         post_data = request.get_json()
         # search... please replace MOCK with real data
         print(MOCK_TEA)
-        response_object['books'] = MOCK_TEA
+        response_object['books'] = json.loads(select_sp('teacher', post_data))
     else:
         response_object['books'] = MOCK_TEA
 
@@ -378,15 +306,10 @@ def all_teach():
     response_object = {'status': 'success'}
     if request.method == 'POST':
         post_data = request.get_json()
-        TEACH.append({
-            "teacher_id": int(post_data.get("teacher_id")),
-            'course_id': int(post_data.get('course_id')),
-            'sec_id': post_data.get('sec_id'),
-            'year_semester': post_data.get('year_semester'),
-        })
+        add('teaches', post_data)
         response_object['message'] = 'Teach added!'
     else:
-        response_object['books'] = TEACH
+        response_object['books'] = json.loads(select_all('teaches'))
     return jsonify(response_object)
 
 @app.route('/teach/<teaa_id>', methods=['PUT', 'DELETE'])
@@ -395,16 +318,10 @@ def single_teach(teaa_id):
     if request.method == 'PUT':
         post_data = request.get_json()
         print(teaa_id)
-        remove_item(teaa_id, TEACH, 'teacher_id')
-        TEACHERS.append({
-            "teacher_id": int(post_data.get("teacher_id")),
-            'course_id': int(post_data.get('course_id')),
-            'sec_id': post_data.get('sec_id'),
-            'year_semester': post_data.get('year_semester'),
-        })
+        update('teaches', post_data, teaa_id)
         response_object['message'] = 'Teach updated!'
     if request.method == 'DELETE':
-        remove_item(teaa_id, TEACH, 'teacher_id')
+        delete('teaches', teaa_id)
         response_object['message'] = 'Teach removed!'
     return jsonify(response_object)
 
@@ -414,7 +331,46 @@ def search_teach():
     if request.method == 'POST':
         post_data = request.get_json()
         # search... please replace MOCK with real data
+        response_object['books'] = json.loads(select_sp('teaches', post_data))
+    else:
         response_object['books'] = MOCK_TEAA
+
+    return jsonify(response_object)
+
+@app.route('/stucourses/search', methods=['GET', 'POST'])
+def search_stuschedule():
+    response_object = {'status': 'success'}
+    if request.method == 'POST':
+        post_data = request.get_json()
+        # search... please replace MOCK with real data
+        print(post_data)
+        response_object['books'] = json.loads(stu_schedule(post_data))
+    else:
+        response_object['books'] = MOCK_TEAA
+
+    return jsonify(response_object)
+
+@app.route('/startcourses/search', methods=['GET', 'POST'])
+def search_start_course():
+    response_object = {'status': 'success'}
+    if request.method == 'POST':
+        post_data = request.get_json()
+        # search... please replace MOCK with real data
+        print(post_data)
+        response_object['books'] = json.loads(start_course(post_data))
+    else:
+        response_object['books'] = MOCK_TEAA
+
+    return jsonify(response_object)
+
+@app.route('/teacourses/search', methods=['GET', 'POST'])
+def search_teaschedule():
+    response_object = {'status': 'success'}
+    if request.method == 'POST':
+        post_data = request.get_json()
+        # search... please replace MOCK with real data
+        print(post_data)
+        response_object['books'] = json.loads(tea_schedule(post_data))
     else:
         response_object['books'] = MOCK_TEAA
 

@@ -17,7 +17,8 @@
               <th scope="col">Course_ID</th>
               <th scope="col">Course_NAME</th>
               <th scope="col">DEPT_NAME</th>
-              <th scope="col">Course_Eng_NAME</th>
+              <th scope="col">Eng_NAME</th>
+              <th scope="col">Link</th>
               <th scope="col">CREDIT</th>
               <th />
             </tr>
@@ -28,6 +29,7 @@
               <td>{{ book.course_name }}</td>
               <td>{{ book.dept_id }}</td>
               <td>{{ book.course_eng_name }}</td>
+              <td>{{ book.link }}</td>
               <td>{{ book.credit }}</td>
               <td>
                 <div class="btn-group" role="group">
@@ -110,6 +112,19 @@
             type="text"
             required
             placeholder="Enter Course_Eng_NAME"
+          />
+        </b-form-group>
+        <b-form-group
+          id="form-link-group"
+          label="Course_Link:"
+          label-for="form-link-input"
+        >
+          <b-form-input
+            id="form-link-input"
+            v-model="addBookForm.link"
+            type="text"
+            required
+            placeholder="Enter Course_Link"
           />
         </b-form-group>
         <b-form-group
@@ -196,6 +211,19 @@
           />
         </b-form-group>
         <b-form-group
+          id="form-link-group"
+          label="Course_Link:"
+          label-for="form-link-input"
+        >
+          <b-form-input
+            id="form-link-input"
+            v-model="editForm.link"
+            type="text"
+            required
+            placeholder="Enter Course_Link"
+          />
+        </b-form-group>
+        <b-form-group
           id="form-cedit-group"
           label="Course_Credit:"
           label-for="form-credit-input"
@@ -275,6 +303,19 @@
           />
         </b-form-group>
         <b-form-group
+          id="form-link-group"
+          label="Course_Link:"
+          label-for="form-link-input"
+        >
+          <b-form-input
+            id="form-link-input"
+            v-model="searchForm.link"
+            type="text"
+            required
+            placeholder="Enter Course_Link"
+          />
+        </b-form-group>
+        <b-form-group
           id="form-cedit-group"
           label="Course_Credit:"
           label-for="form-credit-input"
@@ -312,6 +353,7 @@ export default {
         course_name: '',
         dept_id: '',
         course_eng_name: '',
+        link: '',
         credit: ''
       },
       message: '',
@@ -321,6 +363,7 @@ export default {
         course_name: '',
         dept_id: '',
         course_eng_name: '',
+        link: '',
         credit: ''
       },
       searchForm: {
@@ -328,6 +371,7 @@ export default {
         course_name: '',
         dept_id: '',
         course_eng_name: '',
+        link: '',
         credit: ''
       },
     }
@@ -377,18 +421,21 @@ export default {
       this.addBookForm.course_name = ''
       this.addBookForm.dept_id = ''
       this.addBookForm.course_eng_name = ''
+      this.addBookForm.link = ''
       this.addBookForm.credit = ''
 
       this.editForm.course_id = ''
       this.editForm.course_name = ''
       this.editForm.dept_id = ''
       this.editForm.course_eng_name = ''
+      this.editForm.link = ''
       this.editForm.credit = ''
 
       this.searchForm.course_id = ''
       this.searchForm.course_name = ''
       this.searchForm.dept_id = ''
       this.searchForm.course_eng_name = ''
+      this.searchForm.link = ''
       this.searchForm.credit = ''
     },
     onSubmit(evt) {
@@ -401,6 +448,7 @@ export default {
         course_name: this.addBookForm.course_name,
         dept_id: this.addBookForm.dept_id,
         course_eng_name: this.addBookForm.course_eng_name,
+        link: this.addBookForm.link,
         credit: this.addBookForm.credit
       }
       this.addBook(payload)
@@ -416,6 +464,7 @@ export default {
         course_name: this.searchForm.course_name,
         dept_id: this.searchForm.dept_id,
         course_eng_name: this.searchForm.course_eng_name,
+        link: this.searchForm.link,
         credit: this.searchForm.credit
       }
       this.searchBook(payload)
@@ -439,6 +488,7 @@ export default {
         course_name: this.editForm.course_name,
         dept_id: this.editForm.dept_id,
         course_eng_name: this.editForm.course_eng_name,
+        link: this.editForm.link,
         credit: this.editForm.credit
       }
       this.updateBook(payload, this.editForm.course_id)

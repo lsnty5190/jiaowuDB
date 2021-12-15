@@ -259,7 +259,7 @@ export default {
       // if (this.addBookForm.read[0]) read = true;
       const payload = {
         dept_id: this.addBookForm.dept_id,
-        tot_credits: this.addBookForm.dept_name
+        dept_name: this.addBookForm.dept_name
       }
       this.addBook(payload)
       this.initForm()
@@ -271,7 +271,7 @@ export default {
       // if (this.addBookForm.read[0]) read = true;
       const payload = {
         dept_id: this.searchForm.dept_id,
-        tot_credits: this.searchForm.dept_name
+        dept_name: this.searchForm.dept_name
       }
       this.searchBook(payload)
       this.initForm()
@@ -291,7 +291,7 @@ export default {
       // if (this.editForm.read[0]) read = true;
       const payload = {
         dept_id: this.editForm.dept_id,
-        tot_credits: this.editForm.dept_name
+        dept_name: this.editForm.dept_name
       }
       this.updateBook(payload, this.editForm.dept_id)
     },

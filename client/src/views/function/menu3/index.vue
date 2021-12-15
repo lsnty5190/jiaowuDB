@@ -12,8 +12,8 @@
         <table class="table table-hover">
           <thead>
             <tr>
-              <th scope="col">Classroom_ID</th>
-              <th scope="col">Year Semester</th>
+              <th scope="col">OccupiedTimeSlot</th>
+              
               <th />
             </tr>
           </thead>
@@ -91,7 +91,7 @@ export default {
       const path = 'http://localhost:5000/books'
       axios.get(path)
         .then((res) => {
-          this.books = res.data.books
+          // this.books = res.data.books
         })
         .catch((error) => {
           // eslint-disable-next-line

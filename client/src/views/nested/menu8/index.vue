@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-10">
-        <h1>STUDENT</h1>
+        <h1>TEACHES</h1>
         <hr><br><br>
         <alert v-if="showMessage" :message="message" />
         <button v-b-modal.book-modal type="button" class="btn btn-success btn-sm">Add</button>
@@ -110,7 +110,6 @@
             placeholder="Enter Year Semester"
           />
         </b-form-group>
-        
         <b-button-group>
           <b-button type="submit" variant="primary">Submit</b-button>
           <b-button type="reset" variant="danger">Reset</b-button>

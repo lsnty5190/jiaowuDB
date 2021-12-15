@@ -26,7 +26,7 @@
               <td>{{ book.sec_id }}</td>
               <td>{{ book.year_semester }}</td>
               <td>{{ book.enrollment }}</td>
-              <td>{{ book.classroom_address }}</td>
+              <td>{{ book.address }}</td>
               <td>{{ book.time_slot }}</td>
               <td>{{ book.teacher }}</td>
               <td>
@@ -99,7 +99,7 @@ export default {
       const path = 'http://localhost:5000/books'
       axios.get(path)
         .then((res) => {
-          this.books = res.data.books
+          // this.books = res.data.books
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -158,8 +158,7 @@ export default {
       // let read = false;
       // if (this.addBookForm.read[0]) read = true;
       const payload = {
-        student_id: this.searchForm.student_id,
-        year_semester: this.searchForm.year_semester,
+        course_id: this.searchForm.course_id
       }
       this.searchBook(payload)
       this.initForm()

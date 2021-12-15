@@ -108,7 +108,7 @@ export default {
       const path = 'http://localhost:5000/books'
       axios.get(path)
         .then((res) => {
-          this.books = res.data.books
+          // this.books = res.data.books
         })
         .catch((error) => {
           // eslint-disable-next-line
@@ -167,7 +167,7 @@ export default {
       // let read = false;
       // if (this.addBookForm.read[0]) read = true;
       const payload = {
-        student_id: this.searchForm.teacher_id,
+        teacher_id: this.searchForm.teacher_id,
         year_semester: this.searchForm.year_semester,
       }
       this.searchBook(payload)
