@@ -1,0 +1,16 @@
+[
+    {
+        "course_id": 10,
+        "course_name": "database",
+        "dept_id": 39,
+        "course_eng_name": "database",
+        "credit": 3
+    },
+    {
+        "course_id": 12,
+        "course_name": "database",
+        "dept_id": 39,
+        "course_eng_name": "database",
+        "credit": 5
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "teacher_id": 15,
+        "teacher_name": "lisn",
+        "teacher_gender": "Man",
+        "teacher_title": "Prof",
+        "teacher_nation": "HAN",
+        "teacher_email": "@qq.com",
+        "dept_id": 39
+    },
+    {
+        "teacher_id": 15,
+        "teacher_name": "lisn",
+        "teacher_gender": "Man",
+        "teacher_title": "Prof",
+        "teacher_nation": "HAN",
+        "teacher_email": "@qq.com",
+        "dept_id": 39
+    }
+]

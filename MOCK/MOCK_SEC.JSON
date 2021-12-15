@@ -1,0 +1,18 @@
+[
+    {
+        "course_id": 5,
+        "sec_id": 3,
+        "year_semester": "2021 Fall",
+        "classroom_id": 10,
+        "time_slot_id": 15,
+        "enrollment": 20
+    },
+    {
+        "course_id": 115,
+        "sec_id": 3,
+        "year_semester": "2022 Fall",
+        "classroom_id": 10,
+        "time_slot_id": 15,
+        "enrollment": 20
+    }
+]

@@ -1,0 +1,14 @@
+[
+    {
+        "student_id": 2,
+        "student_name": "lisn",
+        "dept_id": 39,
+        "tot_credits": 30
+    },
+    {
+        "student_id": 5,
+        "student_name": "hrgg",
+        "dept_id": 39,
+        "tot_credits": 40
+    }
+]
