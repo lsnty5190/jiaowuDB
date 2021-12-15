@@ -32,12 +32,12 @@ def insert_course():
         sql = basesql % line
         sql_process(sql)
 
-def insert_class():
-    basesql = "Insert into class (course_id,teacher_id,class_time) values %s;"
-    for line in class_fin.readlines():
-        line = line.replace('\n', '')
-        sql = basesql % line
-        sql_process(sql)
+# def insert_class():
+#     basesql = "Insert into class (course_id,teacher_id,class_time) values %s;"
+#     for line in class_fin.readlines():
+#         line = line.replace('\n', '')
+#         sql = basesql % line
+#         sql_process(sql)
 
 def insert_department():
     basesql = "Insert into department (dept_id, dept_name) values ('%s');"
