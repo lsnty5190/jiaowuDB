@@ -1,6 +1,5 @@
 import pymysql
 
-<<<<<<< HEAD
 # conn=pymysql.connect(host="localhost",user='root',passwd='root',database='jwsys',port=3306,use_unicode=True, charset="utf8")
 conn = pymysql.connect(host='192.168.1.166',
                        port=3306,
@@ -9,9 +8,7 @@ conn = pymysql.connect(host='192.168.1.166',
                        database='jiaowuDB',
                        use_unicode=True, 
                        charset="utf8")
-=======
 conn=pymysql.connect(host="localhost",user='root',passwd='root',database='jwsys',port=3306,use_unicode=True, charset="utf8")
->>>>>>> caff29c300df1d4b1326fb7840f4aca6946cc463
 cursor = conn.cursor()
 
 
