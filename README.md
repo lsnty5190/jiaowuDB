@@ -38,12 +38,3 @@ visit [http://localhost:9528](http://localhost:9528)
 
 MOCK is the fake json data to test client. It is consistent with the database schema.
 
-<p align="center">
-  <b>ER</b>
-</p>
-<p align="center">
-   <!-- <a href="https://finclip.com?from=vue_element" title="FinClip" target="_blank"> -->
-    <img height="200px" src="http://github.com/lsnty5190/jiaowuDB/tree/main/client/src/assets/front/ER.jpg" title="FinClip">
-   <!-- </a> -->
-</p>
-
