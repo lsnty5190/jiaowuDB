@@ -283,7 +283,7 @@
             id="form-title-input"
             v-model="searchForm.teacher_id"
             type="text"
-            required
+            
             placeholder="Enter Teacher_ID"
           />
         </b-form-group>
@@ -296,7 +296,7 @@
             id="form-author-input"
             v-model="searchForm.teacher_name"
             type="text"
-            required
+            
             placeholder="Enter Teacher_name"
           />
         </b-form-group>
@@ -309,7 +309,7 @@
             id="form-gender-input"
             v-model="searchForm.teacher_gender"
             type="text"
-            required
+            
             placeholder="Enter Teacher_gender"
           />
         </b-form-group>
@@ -322,7 +322,7 @@
             id="form-tt-input"
             v-model="searchForm.teacher_title"
             type="text"
-            required
+            
             placeholder="Enter Teacher_title"
           />
         </b-form-group>
@@ -335,7 +335,7 @@
             id="form-nation-input"
             v-model="searchForm.teacher_nation"
             type="text"
-            required
+            
             placeholder="Enter Teacher_nation"
           />
         </b-form-group>
@@ -348,7 +348,7 @@
             id="form-e-input"
             v-model="searchForm.teacher_email"
             type="text"
-            required
+            
             placeholder="Enter Teacher_email"
           />
         </b-form-group>
@@ -361,7 +361,7 @@
             id="form-dept-input"
             v-model="searchForm.dept_id"
             type="text"
-            required
+          
             placeholder="Enter dept_id"
           />
         </b-form-group>
@@ -502,8 +502,6 @@ export default {
     onSearch(evt) {
       evt.preventDefault()
       this.$refs.searchBookModal.hide()
-      // let read = false;
-      // if (this.addBookForm.read[0]) read = true;
       const payload = {
         teacher_id: this.searchForm.teacher_id,
         teacher_name: this.searchForm.teacher_name,
