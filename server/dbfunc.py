@@ -1,7 +1,7 @@
 '''
 Author: your name
 Date: 2021-12-15 14:46:51
-LastEditTime: 2021-12-15 21:45:36
+LastEditTime: 2021-12-16 14:52:48
 LastEditors: Please set LastEditors
 Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 FilePath: \jiaowuDB\server\dbconnect.py
@@ -233,7 +233,7 @@ def start_course(data):
 
     sql = "select section.sec_id, section.year_semester, section.enrollment, classroom.address, section.time_slot_id, teacher.teacher_name \
             from section, time_slot, classroom, teaches, teacher \
-            where section.course_id = '%s' and classroom.classroom_id = section.classroom_id and teacher.teacher_id = teaches.teacher_id and teaches.sec_id = section.sec_id" % course_id
+            where section.course_id = '%s' and teaches.course_id = section.course_id and classroom.classroom_id = section.classroom_id and teacher.teacher_id = teaches.teacher_id and teaches.sec_id = section.sec_id" % course_id
 
     print(sql)
 
