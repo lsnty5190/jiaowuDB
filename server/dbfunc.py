@@ -1,7 +1,7 @@
 '''
 Author: your name
 Date: 2021-12-15 14:46:51
-LastEditTime: 2021-12-16 14:52:48
+LastEditTime: 2021-12-16 17:22:24
 LastEditors: Please set LastEditors
 Description: 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 FilePath: \jiaowuDB\server\dbconnect.py
@@ -206,9 +206,9 @@ def stu_schedule(data):
     key_list = find_keys('stu_schedule')
 
     sql = "select course.course_name, section.sec_id, classroom.address, section.time_slot_id \
-            from takes, section, classroom, time_slot, course \
+            from takes, section, classroom, course \
             where takes.student_id = \"%s\" and takes.year_semester = \"%s\" and takes.course_id = course.course_id \
-            and section.sec_id = takes.sec_id and classroom.classroom_id = section.classroom_id " % (student_id, year_semester)
+            and section.course_id = takes.course_id and classroom.classroom_id = section.classroom_id " % (student_id, year_semester)
 
     print(sql)
 
@@ -232,7 +232,7 @@ def start_course(data):
     course_id = data['course_id']
 
     sql = "select section.sec_id, section.year_semester, section.enrollment, classroom.address, section.time_slot_id, teacher.teacher_name \
-            from section, time_slot, classroom, teaches, teacher \
+            from section, classroom, teaches, teacher \
             where section.course_id = '%s' and teaches.course_id = section.course_id and classroom.classroom_id = section.classroom_id and teacher.teacher_id = teaches.teacher_id and teaches.sec_id = section.sec_id" % course_id
 
     print(sql)
@@ -261,9 +261,9 @@ def tea_schedule(data):
     key_list = find_keys('stu_schedule')
 
     sql = "select course.course_name, section.sec_id, classroom.address, section.time_slot_id \
-            from teaches, section, classroom, time_slot, course \
+            from teaches, section, classroom, course \
             where teaches.teacher_id = '%s' and teaches.year_semester = '%s' and teaches.course_id = course.course_id \
-            and section.sec_id = teaches.sec_id and classroom.classroom_id = section.classroom_id" % (teacher_id, year_semester)
+            and section.course_id = teaches.course_id and classroom.classroom_id = section.classroom_id" % (teacher_id, year_semester)
 
     print(sql)
 
